@@ -1,25 +1,65 @@
+/*          --- FACTORY FUNCTIONS ---           */
+const createPlayer = (name, mark, isTurn) => {
+    return {
+        name,
+        mark,
+        isTurn
+    }
+};
+
+const player1 = createPlayer("human", "x", "true");
+const player2 = createPlayer("computer", "o", "false");
+
+
+
 /*          --- MODULES ---         */
 const gameBoardModule = (() => {
     let boardBoxes = document.querySelectorAll("[data-box]");
-    let gameBoard = [
-        "x", "x", "o",
-        "o", "o", "x",
-        "x", "x", "x"
-    ];
-
+    let gameBoard = ["", "", "", "", "", "", "", "", ""];
+    let currentPlayer;
 
     for (let i = 0; i < gameBoard.length; i++) {
         boardBoxes[i].textContent = gameBoard[i] + i;
     }
+    
 
-    // bind events
-    boardBoxes.forEach(box => {   
-        box.addEventListener("click", setMark)
-    })
 
-    function setMark() {
-        console.log(gameBoard)
-    }
+    // display and bind events
+    const displayControllerModule = (() => {
+        // bind events
+        boardBoxes.forEach(box => {   
+            box.addEventListener("click", setMark)
+        })
+
+        function setMark() {
+            checkPlayerTurn()
+            gameBoard.splice(this.dataset.box, 1, currentPlayer.mark)
+            this.textContent = currentPlayer.mark;
+            checkWinner()
+            changePlayerTurn()
+        }
+
+        function checkPlayerTurn() {
+            if (player1.isTurn === "true") {
+                currentPlayer = player1;
+                player2.isTurn = "true";
+                return
+            }
+            if (player2.isTurn === "true") {
+                currentPlayer = player2;
+                player1.isTurn = "true";
+                return
+            }
+        }
+
+        function changePlayerTurn() {
+            if (currentPlayer.isTurn === "true") { return currentPlayer.isTurn = "false" }
+            if (currentPlayer.isTurn === "false") { return currentPlayer.isTurn = "true" }
+        }
+    })();
+
+
+
 
     // check for winner
     function checkWinner() {
@@ -41,29 +81,10 @@ const gameBoardModule = (() => {
             }
         })
     }
-    checkWinner();
 
     return {
-        
     }
 })();
 
-const displayControllerModule = (() => {
-
-})();
 
 
-/*          --- OBJECTS ---         */
-
-
-
-/*          --- FACTORY FUNCTIONS ---           */
-const createPlayer = (name, mark) => {
-    return {
-        name,
-        mark
-    }
-};
-
-const human = createPlayer("human", "x");
-const computer = createPlayer("computer", "o");
