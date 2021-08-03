@@ -1,0 +1,21 @@
+.game-board {
+    width: 600px;
+    height: 600px;
+    margin: 0 auto;
+    background-color: cyan;
+    color: black;
+    border: 6px solid rgb(44, 44, 44);
+    border-radius: 10px;
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+}
+
+.box {
+    border: 6px solid rgb(255, 0, 43);
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 4em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
