@@ -32,6 +32,7 @@ const gameBoardModule = (() => {
         })
 
         function setMark() {
+            if (gameBoard[this.dataset.box]) { return }
             checkPlayerTurn()
             gameBoard.splice(this.dataset.box, 1, currentPlayer.mark)
             this.textContent = currentPlayer.mark;
