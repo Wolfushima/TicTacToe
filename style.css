@@ -25,8 +25,7 @@ body {
 header {
     text-align: center;
     color: white;
-    font-size: 10em;
-    
+    font-size: 5em;
 }
 
 main {
@@ -63,6 +62,50 @@ main {
     font-family: monospace;
 }
 
+/*          --- BUTTONS ---         */
+button {
+    height: 40px;
+    width: 90px;
+    border-radius: 5px;
+    background-color: hsl(194, 94%, 69%);
+    color: rgb(1, 1, 97);
+    border: none;
+    font-family: monospace;
+    font-weight: 900;
+    border: 1px solid black;
+}
+
+button:hover {
+    background-color: hsl(0, 0%, 11%);
+    color: hsl(194, 94%, 69%);
+    border: 1px solid white;
+}
+
+button:active {
+    transform: scale(97%);
+}
+
+.menu-btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 10px;
+}
+
+.menu-btns > .vsPlayer-btn{
+    margin-right: 10px;
+}
+
+.restart-btn {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.restart-btn > button {
+    width: 130px;
+}
+
 /*          --- FOOTER ---          */
 footer {
     filter: invert();
@@ -74,7 +117,6 @@ footer {
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
-    font-family: "Montserrat";
     font-weight: 600;
     color: rgb(51, 51, 51);
     text-shadow: 1px 1px 1px #00c3ff9b;
