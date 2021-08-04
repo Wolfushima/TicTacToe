@@ -24,7 +24,7 @@ const gameBoardModule = (() => {
     
 
 
-    // display and bind events
+    // display and bind events 
     const displayControllerModule = (() => {
         // bind events
         boardBoxes.forEach(box => {   
@@ -75,14 +75,20 @@ const gameBoardModule = (() => {
         ]
 
         winningConditions.forEach(condition => {
-            if (gameBoard[condition[0]] === "x" && gameBoard[condition[1]] === "x" && gameBoard[condition[2]] === "x") {
+            if (gameBoard[condition[0]] === currentPlayer.mark &&
+                gameBoard[condition[1]] === currentPlayer.mark &&
+                gameBoard[condition[2]] === currentPlayer.mark) {
                 console.log(condition)
+                console.log(currentPlayer)
                 console.log("you win")
             }
         })
     }
 
     return {
+        checkWinner,
+        currentPlayer,
+        gameBoard
     }
 })();
 
