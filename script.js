@@ -18,25 +18,50 @@ const gameBoardModule = (() => {
     const boardBoxes = document.querySelectorAll("[data-box]");
     let gameBoard = ["", "", "", "", "", "", "", "", ""];
     let currentPlayer;
-    
+    let playerMode;
 
 
     // display and bind events 
     const bindingEvents = (() => {
         // bind events
         boardBoxes.forEach(box => {   
-            box.addEventListener("click", setMark)
+            box.addEventListener("click", handleMark)
         })
 
-        function setMark() {
+        function handleMark(e) {
             if (gameBoard[this.dataset.box]) { return }
+            if (playerMode === "vsPlayer") { setMark(e) }
+            else if (playerMode === "vsAI") {
+                setMark(e)
+                /*  AI STUFF    */
+                if (!gameBoard.includes("")) { return }
+                if (player2.isTurn === "true") {
+                    checkPlayerTurn()
+                    setMarkAI()
+                    checkWinner()
+                }
+                /*  --------    */
+            }
+            else return
+        }
+
+        function setMark(e){
             checkPlayerTurn()
-            gameBoard.splice(this.dataset.box, 1, currentPlayer.mark)
-            this.textContent = currentPlayer.mark;
+            gameBoard.splice(e.target.dataset.box, 1, currentPlayer.mark)
+            e.target.textContent = currentPlayer.mark;
             checkWinner()
             changePlayerTurn()
         }
 
+        function setMarkAI() {
+            const randomAIPick = Math.floor(Math.random() * gameBoard.length);
+            if (gameBoard[randomAIPick]) {
+                return setMarkAI()
+            }
+            gameBoard.splice(randomAIPick, 1, currentPlayer.mark)
+            boardBoxes[randomAIPick].textContent = currentPlayer.mark;
+        }
+        
         function checkPlayerTurn() {
             if (player1.isTurn === "true") {
                 currentPlayer = player1;
@@ -58,10 +83,9 @@ const gameBoardModule = (() => {
 
     const displayControllerModule = (() => {
         const restartBtn = document.querySelector(".restart-btn").addEventListener("click", () => { resetGame() });
-        const vsPlayerBtn = document.querySelector(".vsPlayer-btn");
-        const vsAIBtn = document.querySelector(".vsAI-btn");
-
-
+        const vsPlayerBtn = document.querySelector(".vsPlayer-btn").addEventListener("click", () => { playerMode = "vsPlayer" });
+        const vsAIBtn = document.querySelector(".vsAI-btn").addEventListener("click", () => { playerMode = "vsAI" });
+        // handle when you are currently playing a game so if you click on a button it will restard the whole game
     })();
 
 
