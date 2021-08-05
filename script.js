@@ -14,18 +14,15 @@ const player2 = createPlayer("computer", "o", "false");
 
 /*          --- MODULES ---         */
 const gameBoardModule = (() => {
-    let boardBoxes = document.querySelectorAll("[data-box]");
+    const gameBoardContainer = document.querySelector(".game-board");
+    const boardBoxes = document.querySelectorAll("[data-box]");
     let gameBoard = ["", "", "", "", "", "", "", "", ""];
     let currentPlayer;
-
-    for (let i = 0; i < gameBoard.length; i++) {
-        boardBoxes[i].textContent = gameBoard[i] + i;
-    }
     
 
 
     // display and bind events 
-    const displayControllerModule = (() => {
+    const bindingEvents = (() => {
         // bind events
         boardBoxes.forEach(box => {   
             box.addEventListener("click", setMark)
@@ -59,6 +56,13 @@ const gameBoardModule = (() => {
         }
     })();
 
+    const displayControllerModule = (() => {
+        const restartBtn = document.querySelector(".restart-btn").addEventListener("click", () => { resetGame() });
+        const vsPlayerBtn = document.querySelector(".vsPlayer-btn");
+        const vsAIBtn = document.querySelector(".vsAI-btn");
+
+
+    })();
 
 
 
@@ -82,8 +86,19 @@ const gameBoardModule = (() => {
                 console.log(condition)
                 console.log(currentPlayer)
                 console.log("you win")
+                gameBoardContainer.style.pointerEvents = "none";
             }
         })
+    }
+
+    function resetGame() {
+        gameBoard = ["", "", "", "", "", "", "", "", ""];
+        for (let i = 0; i < gameBoard.length; i++) {
+            boardBoxes[i].textContent = "";
+        }
+        player1.isTurn = "true";
+        player2.isTurn = "false";
+        gameBoardContainer.style.pointerEvents = "auto";
     }
 
     return {
